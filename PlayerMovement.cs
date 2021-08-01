@@ -7,15 +7,15 @@ public class PlayerMovement : MonoBehaviour {
     public Transform playerCam;
     public Transform orientation;
     
-    //Other
+    
     private Rigidbody rb;
 
-    //Rotation and look
+    //Rotation and looking
     private float xRotation;
     private float sensitivity = 50f;
     private float sensMultiplier = 1f;
     
-    //Movement
+    //Movement n shit
     public float moveSpeed = 4500;
     public float maxSpeed = 20;
     public bool grounded;
@@ -64,9 +64,8 @@ public class PlayerMovement : MonoBehaviour {
         Look();
     }
 
-    /// <summary>
-    /// Find user input. Should put this in its own class but im lazy
-    /// </summary>
+ 
+   /// </summary>
     private void MyInput() {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
@@ -99,14 +98,14 @@ public class PlayerMovement : MonoBehaviour {
         //Extra gravity
         rb.AddForce(Vector3.down * Time.deltaTime * 10);
         
-        //Find actual velocity relative to where player is looking
+        //Find actual velocity relative to player's vision
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        //Counteract sliding and sloppy movement
+        
         CounterMovement(x, y, mag);
         
-        //If holding jump && ready to jump, then jump
+     
         if (readyToJump && jumping) Jump();
 
         //Set max speed
@@ -118,16 +117,16 @@ public class PlayerMovement : MonoBehaviour {
             return;
         }
         
-        //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+        //If speed is larger than maxspeed, cancel out the input so you max speed is not exceeded
         if (x > 0 && xMag > maxSpeed) x = 0;
         if (x < 0 && xMag < -maxSpeed) x = 0;
         if (y > 0 && yMag > maxSpeed) y = 0;
         if (y < 0 && yMag < -maxSpeed) y = 0;
 
-        //Some multipliers
+        //multipliers lol
         float multiplier = 1f, multiplierV = 1f;
         
-        // Movement in air
+        //in-air movement
         if (!grounded) {
             multiplier = 0.5f;
             multiplierV = 0.5f;
@@ -207,11 +206,6 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Find the velocity relative to where the player is looking
-    /// Useful for vectors calculations regarding movement and limiting movement
-    /// </summary>
-    /// <returns></returns>
     public Vector2 FindVelRelativeToLook() {
         float lookAngle = orientation.transform.eulerAngles.y;
         float moveAngle = Mathf.Atan2(rb.velocity.x, rb.velocity.z) * Mathf.Rad2Deg;
@@ -233,9 +227,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private bool cancellingGrounded;
     
-    /// <summary>
-    /// Handle ground detection
-    /// </summary>
+
     private void OnCollisionStay(Collision other) {
         //Make sure we are only checking for walkable layers
         int layer = other.gameObject.layer;
