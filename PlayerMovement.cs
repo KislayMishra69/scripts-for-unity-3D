@@ -4,8 +4,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     //Assingables
-    public Transform playerCam;
-    public Transform orientation;
+    public Transform PlayerCam;
+    public Transform Orientation;
     
     
     private Rigidbody rb;
